@@ -1,21 +1,23 @@
 
 let grid;
 
+let wid = 200;
+
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(wid, wid);
 
 
   grid = [
-    [0, 0, 0, 0]
-    [0, 0, 0, 0]
-    [0, 0, 0, 0]
-    [0, 0, 0, 0]
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
+    [0, 0, 0, 0],
   ];
   
-  console.table(grid);
+  //console.table(grid);
   addNumber();
   addNumber();
-  console.table(grid);
+  //console.table(grid);
 
 }
 
@@ -35,10 +37,42 @@ function addNumber(){
   let spot = random(options);
   let r = random(1);
 
-  grid[spot.x][spot.y] = r>0.5 ? 2 : 4;
+  grid[spot.x][spot.y] = r > 0.5 ? 2 : 4;
 
 };
 
 function draw() {
-  background(220);
+  background(255);
+  drawGrid();
+
+}
+
+function slide(row) {
+  let arr = row.filter(val => 0);
+  let missing = 4 - arr.lenght;
+  var z = Array(missing).fill(0);
+  arr.concat(z);
+  return arr;
+}
+
+
+
+function drawGrid() {
+  let w = wid/4;
+  for (let i = 0; i < 4; i++){
+    for(let j = 0; j < 4; j++){
+      noFill();
+      strokeWeight(2);
+      stroke(0);
+      rect(i*w, j*w, w, w);
+      let val = grid[i][j];
+      if (grid[i][j] !==0){
+        textAlign(CENTER, CENTER);
+        textSize(50);
+        fill(0);
+        noStroke();
+        text(val, i * w + (w / 2), j * w + (w / 2));
+      }
+    }
+  }
 }
